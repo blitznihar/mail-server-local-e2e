@@ -1,0 +1,16 @@
+services:
+  smtp4dev:
+    image: rnwood/smtp4dev:v3
+    container_name: smtp4dev
+    restart: unless-stopped
+    ports:
+      - "3000:80"    # Web UI
+      - "3025:25"    # SMTP
+      - "3110:110"   # POP3
+      - "3143:143"   # IMAP
+    environment:
+      - ServerOptions__Users=smtp4devuser:smtp4devpassword:All
+    volumes:
+      - smtp4dev_data:/smtp4dev
+
+#docker compose -f compose.smtp4dev.yml up -d

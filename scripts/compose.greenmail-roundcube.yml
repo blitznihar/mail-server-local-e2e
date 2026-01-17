@@ -1,0 +1,30 @@
+services:
+  greenmail:
+    image: greenmail/standalone:latest
+    container_name: greenmail
+    ports:
+      - "4025:3025"
+      - "4110:3110"
+      - "4143:3143"
+      - "3001:8080"
+    environment:
+      - GREENMAIL_OPTS=-Dgreenmail.setup.test.all -Dgreenmail.hostname=0.0.0.0 -Dgreenmail.users=testuser:secret@localhost
+
+  roundcube:
+    image: roundcube/roundcubemail:latest
+    container_name: roundcube
+    ports:
+      - "3080:80"
+    environment:
+      - ROUNDCUBEMAIL_DEFAULT_HOST=greenmail
+      - ROUNDCUBEMAIL_DEFAULT_PORT=3143
+      - ROUNDCUBEMAIL_SMTP_SERVER=greenmail
+      - ROUNDCUBEMAIL_SMTP_PORT=3025
+      - ROUNDCUBEMAIL_USERNAME_DOMAIN=
+    depends_on:
+      - greenmail
+#docker compose -f compose.greenmail-roundcube.yml up -d
+#docker compose -f scripts/compose.greenmail-roundcube.yml up -d
+#docker compose -f scripts/compose.greenmail-roundcube.yml down -v
+# Access Roundcube Web UI at http://localhost:3080
+# Login with username: testuser and password: secret
