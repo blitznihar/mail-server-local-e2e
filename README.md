@@ -29,12 +29,15 @@
 First Setup the local SMTP using docker
 
 - FOR SMTP4DEV
+
 `docker compose -f compose.smtp4dev.yml up -d`
 
 - FOR MAILPIT
+
 `docker compose -f compose.mailpit.yml up -d`
 
 - FOR GREENMAIL with ROUNDCUBE
+
 `docker compose -f compose.greenmail-roundcube.yml up -d`
 
 
